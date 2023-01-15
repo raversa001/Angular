@@ -39,24 +39,40 @@ Assignment.findById = (id, result) => {
 	});
 };
 
-Assignment.getAll = (title, result) => {
-	let query = "SELECT * FROM assignments";
+Assignment.getAll = (filter, result) => {
+	let query = `SELECT assignments.subjectId, subjectName, teacherLN, FROM_UNIXTIME(assignedTime) as assignedTime 
+	FROM assignments, subjects, teachers
+	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
 
-	if (title) {
-		query += ` WHERE title LIKE '%${title}%'`;
-	}
+	if(filter)
+		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
 
 	sql.query(query, (err, res) => {
 		if (err) {
-			console.log("error: ", err);
 			result(null, err);
 			return;
 		}
 
-		console.log("assignments: ", res);
 		result(null, res);
 	});
 };
+
+Assignment.getAllClasses = (teacherId, result) => {
+	let query = `SELECT classId, className FROM classes` // WHERE teacherId = ${teacherId}
+
+	//if(filter)
+	//	query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
+
+	sql.query(query, (err, res) => {
+		if (err) {
+			result(null, err);
+			return;
+		}
+
+		result(null, res);
+	});
+};
+
 
 Assignment.getAllPublished = result => {
 	sql.query("SELECT * FROM assignments WHERE published=true", (err, res) => {

@@ -20,7 +20,7 @@ import { AssignmentsListComponent } from './components/assignments-list/assignme
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

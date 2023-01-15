@@ -1,35 +1,55 @@
 <div>
-  <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          [(ngModel)]="assignment.title"
-          name="title"
-        />
-      </div>
+	<div class="submit-form">
+		<div *ngIf="!submitted">
+			<div class="form-group">
+				<label for="classId">Classe concernée</label>
+				<!-- <input
+					type="text"
+					class="form-control"
+					id="classId"
+					required
+					[(ngModel)]="assignment.classId"
+					name="classId"
+					/> -->
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          [(ngModel)]="assignment.description"
-          name="description"
-        />
-      </div>
+					<select #sel [ngModelOptions]="{standalone: true}" [(ngModel)]="assignment.classId" class="form-control" required (change)="onChange(sel.value)">
+						<option *ngFor="let class of assignments"
+						[value]="class.classId">
+						{{ class.className }}
+					</option>						
+				</select>
+			</div>
 
-      <button (click)="saveAssignment()" class="btn btn-success">Submit</button>
-    </div>
+			<div class="form-group">
+				<label for="givenTime">Date butoire</label>
+				<input
+				type="date"
+				class="form-control"
+				id="givenTime"
+				required
+				[(ngModel)]="assignment.givenTime"
+				name="givenTime"
+				/>
+			</div>
 
-    <div *ngIf="submitted">
-      <h4>Assignment was submitted successfully!</h4>
-      <button class="btn btn-success" (click)="newAssignment()">Add</button>
-    </div>
-  </div>
+			<div class="form-group">
+				<label for="description">Description</label>
+				<textarea
+				type="text"
+				class="form-control"
+				id="description"
+				required
+				[(ngModel)]="assignment.description"
+				name="description"
+				></textarea>
+			</div>
+
+			<button (click)="saveAssignment()" class="btn btn-success">Submit</button>
+		</div>
+
+		<div *ngIf="submitted">
+			<h4>Assignment was submitted successfully!</h4>
+			<button class="btn btn-success" (click)="newAssignment()">Add</button>
+		</div>
+	</div>
 </div>

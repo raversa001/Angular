@@ -41,6 +41,19 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.findAllClasses = (req, res) => {
+  const teacherId = req.query.teacherId;
+
+  Assignment.getAllClasses(teacherId, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving assignments."
+      });
+    else res.send(data);
+  });
+};
+
 // Find a single Assignment by Id
 exports.findOne = (req, res) => {
   Assignment.findById(req.params.id, (err, data) => {

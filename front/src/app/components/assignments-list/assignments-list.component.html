@@ -1,43 +1,49 @@
 <div class="list row">
-  <div class="col-md-8">
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by title"
-        [(ngModel)]="title"
-      />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          (click)="searchTitle()"
-        >
-          Search
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <h4>Assignments List</h4>
-    <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngFor="let assignment of assignments; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="setActiveAssignment(assignment, i)"
-      >
-        {{ assignment.title }}
-      </li>
-    </ul>
+	<div class="col-md-8">
+		<div class="input-group mb-3">
+			<input
+			type="text"
+			class="form-control"
+			placeholder="Recherche par matière ou professeur"
+			[(ngModel)]="title"
+			/>
+			<div class="input-group-append">
+				<button
+				class="btn btn-outline-secondary"
+				(click)="searchTitle()"
+				>
+				Search
+			</button>
+		</div>
+	</div>
+</div>
+<div class="col-md-6">
+	<h4>Liste des devoirs pour l'élève undefined</h4>
+	<ul class="list-group">
+		<li
+		class="list-group-item"
+		*ngFor="let assignment of assignments; let i = index"
+		[class.active]="i == currentIndex"
+		(click)="setActiveAssignment(assignment, i)"
+		>
+		{{ "Devoir n°" + assignment.subjectId }}
+		<br>
+		{{ assignment.subjectName }}
+		<br>
+		Donné le {{ assignment.assignedTime }}
+		<br>
+		Par le professeur {{ assignment.teacherLN }}
+	</li>
+</ul>
 
-    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
-      Remove All
-    </button>
-  </div>
-  <div class="col-md-6">
-    <app-assignment-details
-      [viewMode]="true"
-      [currentAssignment]="currentAssignment"
-    ></app-assignment-details>
-  </div>
+<button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
+	(DEBUG) Tout supprimer
+</button>
+</div>
+<div class="col-md-6">
+	<app-assignment-details
+	[viewMode]="true"
+	[currentAssignment]="currentAssignment"
+	></app-assignment-details>
+</div>
 </div>

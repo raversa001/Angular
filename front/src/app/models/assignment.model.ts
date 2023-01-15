@@ -1,6 +1,16 @@
 export class Assignment {
-  id?: any;
-  title?: string;
-  description?: string;
-  published?: boolean;
+	id?: number
+	title?: string
+	description?: string
+	published?: boolean
+	assignmentId?: number
+	giverId?: number
+	studentId?: number
+	subjectId?: number	
+	givenTime?: number
+	subjectName?: string
+	teacherLN?: string
+	assignedTime?: number
+	classId?: number
+	className?: string	
 }
