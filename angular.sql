@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 15 jan. 2023 à 01:33
+-- Généré le :  Dim 15 jan. 2023 à 04:24
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -37,14 +37,37 @@ CREATE TABLE IF NOT EXISTS `assignments` (
   `assignedTime` int(11) NOT NULL,
   `givenTime` int(11) NOT NULL,
   PRIMARY KEY (`assignmentId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `assignments`
 --
 
 INSERT INTO `assignments` (`assignmentId`, `giverId`, `studentId`, `subjectId`, `assignedTime`, `givenTime`) VALUES
-(1, 1, 1, 1, 1673736656, 1296000);
+(1, 1, 1, 1, 1673736656, 1296000),
+(2, 1, 1, 2, 1673736656, 1296000);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `classes`
+--
+
+DROP TABLE IF EXISTS `classes`;
+CREATE TABLE IF NOT EXISTS `classes` (
+  `classId` int(11) NOT NULL AUTO_INCREMENT,
+  `className` varchar(128) NOT NULL,
+  PRIMARY KEY (`classId`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `classes`
+--
+
+INSERT INTO `classes` (`classId`, `className`) VALUES
+(1, 'M1 MIAGE'),
+(2, 'L3 MIASHS PARCOURS MIAGE'),
+(3, 'M1 INFORMATIQUE');
 
 -- --------------------------------------------------------
 
@@ -57,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   `studentId` int(11) NOT NULL AUTO_INCREMENT,
   `studentFN` varchar(64) NOT NULL,
   `studentLN` varchar(64) NOT NULL,
+  `classId` int(11) NOT NULL,
   PRIMARY KEY (`studentId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -64,9 +88,9 @@ CREATE TABLE IF NOT EXISTS `students` (
 -- Déchargement des données de la table `students`
 --
 
-INSERT INTO `students` (`studentId`, `studentFN`, `studentLN`) VALUES
-(1, 'Richard', 'Aversa'),
-(2, 'Jarod', 'Acloque');
+INSERT INTO `students` (`studentId`, `studentFN`, `studentLN`, `classId`) VALUES
+(1, 'Richard', 'Aversa', 0),
+(2, 'Jarod', 'Acloque', 0);
 
 -- --------------------------------------------------------
 
@@ -131,6 +155,18 @@ CREATE TABLE IF NOT EXISTS `teachers` (
 
 INSERT INTO `teachers` (`teacherId`, `teacherFN`, `teacherLN`) VALUES
 (1, 'Michel', 'Buffa');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `teachers_classes`
+--
+
+DROP TABLE IF EXISTS `teachers_classes`;
+CREATE TABLE IF NOT EXISTS `teachers_classes` (
+  `teacherId` int(11) NOT NULL,
+  `classId` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
