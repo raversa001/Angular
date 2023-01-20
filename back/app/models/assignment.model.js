@@ -2,9 +2,11 @@ const sql = require("./db.js");
 
 // constructor
 const Assignment = function(assignment) {
-	this.title = assignment.title;
-	this.description = assignment.description;
-	this.published = assignment.published;
+	this.assignedTime = assignment.assignedTime
+	this.classId = assignment.classId
+	this.description = assignment.description
+	this.givenTime = assignment.givenTime
+	this.subjectId = assignment.subjectId
 };
 
 Assignment.create = (newAssignment, result) => {
@@ -40,12 +42,28 @@ Assignment.findById = (id, result) => {
 };
 
 Assignment.getAll = (filter, result) => {
-	let query = `SELECT assignments.subjectId, subjectName, teacherLN, FROM_UNIXTIME(assignedTime) as assignedTime 
+	let query = `SELECT assignments.subjectId, subjectName, description, givenTime, teacherLN, FROM_UNIXTIME(assignedTime) as assignedTime 
 	FROM assignments, subjects, teachers
 	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
 
 	if(filter)
 		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
+
+	sql.query(query, (err, res) => {
+		if (err) {
+			result(null, err);
+			return;
+		}
+
+		result(null, res);
+	});
+};
+
+Assignment.getAllSubjects = (teacherId, result) => {
+	let query = `SELECT subjectId, subjectName FROM subjects` // WHERE teacherId = ${teacherId}
+
+	//if(filter)
+	//	query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
 
 	sql.query(query, (err, res) => {
 		if (err) {
@@ -72,7 +90,6 @@ Assignment.getAllClasses = (teacherId, result) => {
 		result(null, res);
 	});
 };
-
 
 Assignment.getAllPublished = result => {
 	sql.query("SELECT * FROM assignments WHERE published=true", (err, res) => {

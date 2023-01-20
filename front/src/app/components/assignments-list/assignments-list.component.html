@@ -26,13 +26,15 @@
 		[class.active]="i == currentIndex"
 		(click)="setActiveAssignment(assignment, i)"
 		>
-		{{ "Devoir n°" + assignment.subjectId }}
+		Devoir n°{{ assignment.subjectId }} de {{ assignment.subjectName }}
 		<br>
-		{{ assignment.subjectName }}
 		<br>
-		Donné le {{ assignment.assignedTime }}
+		Donné le {{ assignment.assignedTime }} et à rendre pour {{ assignment.givenTime }}
 		<br>
 		Par le professeur {{ assignment.teacherLN }}
+		<br>
+		<br>
+		{{ assignment.description }}
 	</li>
 </ul>
 

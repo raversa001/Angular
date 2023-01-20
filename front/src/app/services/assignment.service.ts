@@ -43,4 +43,8 @@ export class AssignmentService {
 	getAllClasses(): Observable<Assignment[]> {		
 		return this.http.get<Assignment[]>(baseUrl + "/classes")
 	}
+
+	getAllSubjects(): Observable<Assignment[]> {
+		return this.http.get<Assignment[]>(baseUrl + "/subjects")
+	}
 }

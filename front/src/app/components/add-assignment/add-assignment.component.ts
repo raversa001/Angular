@@ -9,6 +9,7 @@ import { AssignmentService } from 'src/app/services/assignment.service'
 })
 export class AddAssignmentComponent {
 	assignments?: Assignment[]
+	subjects?: Assignment[]
 
 	assignment: Assignment = {
 		title: '',
@@ -21,6 +22,7 @@ export class AddAssignmentComponent {
 
 	ngOnInit(): void {
 		this.retrieveClasses()
+		this.retrieveSubjects()
 
 		// add check to see which teacher is on
 	}
@@ -30,24 +32,29 @@ export class AddAssignmentComponent {
 		.subscribe({
 			next: (data) => {
 				this.assignments = data
-				console.log(data)
 			},
 			error: (e) => console.error(e)
 		});
 	}
 
+	retrieveSubjects(): void {
+		this.assignmentService.getAllSubjects()
+		.subscribe({
+			next: (data) => {
+				this.subjects = data
+			},
+			error: (e) => console.error(e)
+		})
+	}
+
 	saveAssignment(): void {
 		const data = {
 			classId: this.assignment.classId,
+			subjectId: this.assignment.subjectId,
 			givenTime: this.assignment.givenTime,
-			assignedTime: Date.now(),
+			assignedTime: Math.round(Date.now() / 1000),
 			description: this.assignment.description
 		};
-
-		console.log(data)
-
-		if(true)
-			return
 
 		this.assignmentService.create(data)
 		.subscribe({

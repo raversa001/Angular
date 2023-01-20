@@ -31,11 +31,13 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `assignments`;
 CREATE TABLE IF NOT EXISTS `assignments` (
   `assignmentId` int(11) NOT NULL AUTO_INCREMENT,
-  `giverId` int(11) NOT NULL,
-  `studentId` int(11) NOT NULL,
-  `subjectId` int(11) NOT NULL,
+  `giverId` int(11) NOT NULL DEFAULT 1,
+  `studentId` int(11) NOT NULL DEFAULT 0,
+  `subjectId` int(11) NOT NULL DEFAULT 1,
   `assignedTime` int(11) NOT NULL,
-  `givenTime` int(11) NOT NULL,
+  `givenTime` varchar(16) NOT NULL,
+  `classId` int(11) NOT NULL,
+  `description` varchar(128) NOT NULL,
   PRIMARY KEY (`assignmentId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 

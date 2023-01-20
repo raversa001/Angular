@@ -3,19 +3,20 @@
 		<div *ngIf="!submitted">
 			<div class="form-group">
 				<label for="classId">Classe concernée</label>
-				<!-- <input
-					type="text"
-					class="form-control"
-					id="classId"
-					required
-					[(ngModel)]="assignment.classId"
-					name="classId"
-					/> -->
-
 					<select #sel [ngModelOptions]="{standalone: true}" [(ngModel)]="assignment.classId" class="form-control" required (change)="onChange(sel.value)">
 						<option *ngFor="let class of assignments"
 						[value]="class.classId">
 						{{ class.className }}
+					</option>						
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="subjectId">Matière concernée</label>
+					<select #sel [ngModelOptions]="{standalone: true}" [(ngModel)]="assignment.subjectId" class="form-control" required (change)="onChange(sel.value)">
+						<option *ngFor="let class of subjects"
+						[value]="class.subjectId">
+						{{ class.subjectName }}
 					</option>						
 				</select>
 			</div>
@@ -49,7 +50,7 @@
 
 		<div *ngIf="submitted">
 			<h4>Assignment was submitted successfully!</h4>
-			<button class="btn btn-success" (click)="newAssignment()">Add</button>
+			<button class="btn btn-success" (click)="saveAssignment()">Add</button>
 		</div>
 	</div>
 </div>
