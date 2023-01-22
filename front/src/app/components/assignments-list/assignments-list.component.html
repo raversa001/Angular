@@ -18,7 +18,7 @@
 	</div>
 </div>
 <div class="col-md-6">
-	<h4>Liste des devoirs pour l'élève undefined</h4>
+	<h4>Liste des devoirs</h4>
 	<ul class="list-group">
 		<li
 		class="list-group-item"
@@ -29,7 +29,7 @@
 		Devoir n°{{ assignment.subjectId }} de {{ assignment.subjectName }}
 		<br>
 		<br>
-		Donné le {{ assignment.assignedTime }} et à rendre pour {{ assignment.givenTime }}
+		Donné le {{ assignment.assignedTime }} et à rendre pour le {{ assignment.givenTime }}
 		<br>
 		Par le professeur {{ assignment.teacherLN }}
 		<br>
@@ -39,9 +39,9 @@
 	</li>
 </ul>
 
-<button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
+<!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
 	(DEBUG) Tout supprimer
-</button>
+</button> -->
 </div>
 <div class="col-md-6">
 	<app-assignment-details

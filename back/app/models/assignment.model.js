@@ -42,7 +42,7 @@ Assignment.findById = (id, result) => {
 };
 
 Assignment.getAll = (filter, result) => {
-	let query = `SELECT assignments.subjectId, subjectName, description, givenTime, teacherLN, FROM_UNIXTIME(assignedTime) as assignedTime 
+	let query = `SELECT assignments.subjectId, subjectName, description, givenTime, teacherLN, from_unixtime(assignedTime, '%Y %D %M') as assignedTime 
 	FROM assignments, subjects, teachers
 	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
 
@@ -93,8 +93,8 @@ Assignment.getAllClasses = (teacherId, result) => {
 
 Assignment.updateById = (id, assignment, result) => {
 	sql.query(
-		"UPDATE assignments SET title = ?, description = ?, published = ? WHERE id = ?",
-		[assignment.title, assignment.description, assignment.published, id],
+		"UPDATE assignments SET description = ? WHERE subjectId = ?",
+		[assignment.description, id],
 		(err, res) => {
 			if (err) {
 				console.log("error: ", err);
@@ -103,7 +103,6 @@ Assignment.updateById = (id, assignment, result) => {
 			}
 
 			if (res.affectedRows == 0) {
-		// not found Assignment with the id
 				result({ kind: "not_found" }, null);
 				return;
 			}
@@ -115,7 +114,7 @@ Assignment.updateById = (id, assignment, result) => {
 };
 
 Assignment.remove = (id, result) => {
-	sql.query("DELETE FROM assignments WHERE id = ?", id, (err, res) => {
+	sql.query("DELETE FROM assignments WHERE subjectId = ?", id, (err, res) => {
 		if (err) {
 			console.log("error: ", err);
 			result(null, err);

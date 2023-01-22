@@ -45,10 +45,6 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 -- Déchargement des données de la table `assignments`
 --
 
-INSERT INTO `assignments` (`assignmentId`, `giverId`, `studentId`, `subjectId`, `assignedTime`, `givenTime`) VALUES
-(1, 1, 1, 1, 1673736656, 1296000),
-(2, 1, 1, 2, 1673736656, 1296000);
-
 -- --------------------------------------------------------
 
 --
@@ -67,9 +63,10 @@ CREATE TABLE IF NOT EXISTS `classes` (
 --
 
 INSERT INTO `classes` (`classId`, `className`) VALUES
-(1, 'M1 MIAGE'),
-(2, 'L3 MIASHS PARCOURS MIAGE'),
-(3, 'M1 INFORMATIQUE');
+(1, 'L3 MIASHS PARCOURS MIAGE'),
+(2, 'L3 IA'),
+(3, 'M1 MIAGE'),
+(4, 'M1 INFORMATIQUE');
 
 -- --------------------------------------------------------
 
