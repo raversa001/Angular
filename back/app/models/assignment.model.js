@@ -91,19 +91,6 @@ Assignment.getAllClasses = (teacherId, result) => {
 	});
 };
 
-Assignment.getAllPublished = result => {
-	sql.query("SELECT * FROM assignments WHERE published=true", (err, res) => {
-		if (err) {
-			console.log("error: ", err);
-			result(null, err);
-			return;
-		}
-
-		console.log("assignments: ", res);
-		result(null, res);
-	});
-};
-
 Assignment.updateById = (id, assignment, result) => {
 	sql.query(
 		"UPDATE assignments SET title = ?, description = ?, published = ? WHERE id = ?",

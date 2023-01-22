@@ -24,7 +24,6 @@ export class AssignmentsListComponent implements OnInit {
 		.subscribe({
 			next: (data) => {
 				this.assignments = data
-				console.log(data)
 			},
 			error: (e) => console.error(e)
 		});
@@ -45,11 +44,20 @@ export class AssignmentsListComponent implements OnInit {
 		this.assignmentService.deleteAll()
 		.subscribe({
 			next: (res) => {
-				console.log(res)
 				this.refreshList()
 			},
 			error: (e) => console.error(e)
 		});
+	}
+
+	removeAssignment(ass: any): void {
+		this.assignmentService.delete(ass.subjectId)
+		.subscribe({
+			next: (res) => {
+				this.refreshList()
+			},
+			error: (e) => console.error(e)
+		})
 	}
 
 	searchTitle(): void {

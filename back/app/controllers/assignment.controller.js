@@ -1,15 +1,12 @@
 const Assignment = require("../models/assignment.model.js");
 
-// Create and Save a new Assignment
 exports.create = (req, res) => {
-	// Validate request
 	if (!req.body) {
 		res.status(400).send({
 			message: "Content can not be empty!"
 		});
 	}
 
-	// Create a Assignment
 	const assignment = new Assignment({
 		assignedTime: req.body.assignedTime,
 		classId: req.body.classId,
@@ -18,7 +15,6 @@ exports.create = (req, res) => {
 		givenTime: req.body.givenTime
 	});
 
-	// Save Assignment in the database
 	Assignment.create(assignment, (err, data) => {
 		if (err)
 			res.status(500).send({
@@ -29,7 +25,6 @@ exports.create = (req, res) => {
 	});
 };
 
-// Retrieve all Assignments from the database (with condition).
 exports.findAll = (req, res) => {
 	const title = req.query.title;
 
@@ -86,21 +81,7 @@ exports.findOne = (req, res) => {
 	});
 };
 
-// find all published Assignments
-exports.findAllPublished = (req, res) => {
-	Assignment.getAllPublished((err, data) => {
-		if (err)
-			res.status(500).send({
-				message:
-					err.message || "Some error occurred while retrieving assignments."
-			});
-		else res.send(data);
-	});
-};
-
-// Update a Assignment identified by the id in the request
 exports.update = (req, res) => {
-	// Validate Request
 	if (!req.body) {
 		res.status(400).send({
 			message: "Content can not be empty!"
@@ -128,7 +109,6 @@ exports.update = (req, res) => {
 	);
 };
 
-// Delete a Assignment with the specified id in the request
 exports.delete = (req, res) => {
 	Assignment.remove(req.params.id, (err, data) => {
 		if (err) {
@@ -145,7 +125,6 @@ exports.delete = (req, res) => {
 	});
 };
 
-// Delete all Assignments from the database.
 exports.deleteAll = (req, res) => {
 	Assignment.removeAll((err, data) => {
 		if (err)
