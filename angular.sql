@@ -30,16 +30,20 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `assignments`;
 CREATE TABLE IF NOT EXISTS `assignments` (
-  `assignmentId` int(11) NOT NULL AUTO_INCREMENT,
-  `giverId` int(11) NOT NULL DEFAULT 1,
-  `studentId` int(11) NOT NULL DEFAULT 0,
-  `subjectId` int(11) NOT NULL DEFAULT 1,
-  `assignedTime` int(11) NOT NULL,
-  `givenTime` varchar(16) NOT NULL,
-  `classId` int(11) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  PRIMARY KEY (`assignmentId`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+	`assignmentId` int(11) NOT NULL AUTO_INCREMENT,
+	`giverId` int(11) NOT NULL DEFAULT 1,
+	`studentId` int(11) NOT NULL DEFAULT 0,
+	`subjectId` int(11) NOT NULL DEFAULT 1,
+	`assignedTime` int(11) NOT NULL,
+	`givenTime` varchar(16) NOT NULL,
+	`classId` int(11) NOT NULL,
+	`description` varchar(128) NOT NULL,
+	PRIMARY KEY (`assignmentId`),
+	FOREIGN KEY (`giverId`) REFERENCES teachers(`teacherId`),
+	FOREIGN KEY (`studentId`) REFERENCES students(`studentId`),
+	FOREIGN KEY (`subjectId`) REFERENCES subjects(`subjectId`),
+	FOREIGN KEY (`classId`) REFERENCES classes(`classId`)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `assignments`
@@ -53,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 
 DROP TABLE IF EXISTS `classes`;
 CREATE TABLE IF NOT EXISTS `classes` (
-  `classId` int(11) NOT NULL AUTO_INCREMENT,
-  `className` varchar(128) NOT NULL,
-  PRIMARY KEY (`classId`)
+	`classId` int(11) NOT NULL AUTO_INCREMENT,
+	`className` varchar(128) NOT NULL,
+	PRIMARY KEY (`classId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
@@ -76,11 +80,12 @@ INSERT INTO `classes` (`classId`, `className`) VALUES
 
 DROP TABLE IF EXISTS `students`;
 CREATE TABLE IF NOT EXISTS `students` (
-  `studentId` int(11) NOT NULL AUTO_INCREMENT,
-  `studentFN` varchar(64) NOT NULL,
-  `studentLN` varchar(64) NOT NULL,
-  `classId` int(11) NOT NULL,
-  PRIMARY KEY (`studentId`)
+	`studentId` int(11) NOT NULL AUTO_INCREMENT,
+	`studentFN` varchar(64) NOT NULL,
+	`studentLN` varchar(64) NOT NULL,
+	`classId` int(11) NOT NULL,
+	PRIMARY KEY (`studentId`),
+	FOREIGN KEY (`classId`) REFERENCES classes(`classId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
@@ -99,8 +104,10 @@ INSERT INTO `students` (`studentId`, `studentFN`, `studentLN`, `classId`) VALUES
 
 DROP TABLE IF EXISTS `students_teachers`;
 CREATE TABLE IF NOT EXISTS `students_teachers` (
-  `studentId` int(11) NOT NULL,
-  `teacherId` int(11) NOT NULL
+	`studentId` int(11) NOT NULL,
+	`teacherId` int(11) NOT NULL,
+	FOREIGN KEY (`studentId`) REFERENCES students(`studentId`),
+	FOREIGN KEY (`teacherId`) REFERENCES teachers(`teacherId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -119,9 +126,9 @@ INSERT INTO `students_teachers` (`studentId`, `teacherId`) VALUES
 
 DROP TABLE IF EXISTS `subjects`;
 CREATE TABLE IF NOT EXISTS `subjects` (
-  `subjectId` int(11) NOT NULL AUTO_INCREMENT,
-  `subjectName` varchar(64) NOT NULL,
-  PRIMARY KEY (`subjectId`)
+	`subjectId` int(11) NOT NULL AUTO_INCREMENT,
+	`subjectName` varchar(64) NOT NULL,
+	PRIMARY KEY (`subjectId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
@@ -142,10 +149,10 @@ INSERT INTO `subjects` (`subjectId`, `subjectName`) VALUES
 
 DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE IF NOT EXISTS `teachers` (
-  `teacherId` int(11) NOT NULL AUTO_INCREMENT,
-  `teacherFN` varchar(64) NOT NULL,
-  `teacherLN` varchar(64) NOT NULL,
-  PRIMARY KEY (`teacherId`)
+	`teacherId` int(11) NOT NULL AUTO_INCREMENT,
+	`teacherFN` varchar(64) NOT NULL,
+	`teacherLN` varchar(64) NOT NULL,
+	PRIMARY KEY (`teacherId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -163,8 +170,10 @@ INSERT INTO `teachers` (`teacherId`, `teacherFN`, `teacherLN`) VALUES
 
 DROP TABLE IF EXISTS `teachers_classes`;
 CREATE TABLE IF NOT EXISTS `teachers_classes` (
-  `teacherId` int(11) NOT NULL,
-  `classId` int(11) NOT NULL
+	`teacherId` int(11) NOT NULL,
+	`classId` int(11) NOT NULL,
+	FOREIGN KEY (`teacherId`) REFERENCES teachers(`teacherId`),
+	FOREIGN KEY (`classId`) REFERENCES classes(`classId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -175,8 +184,10 @@ CREATE TABLE IF NOT EXISTS `teachers_classes` (
 
 DROP TABLE IF EXISTS `teachers_subjects`;
 CREATE TABLE IF NOT EXISTS `teachers_subjects` (
-  `teacherId` int(11) NOT NULL,
-  `subjectId` int(11) NOT NULL
+	`teacherId` int(11) NOT NULL,
+	`subjectId` int(11) NOT NULL,
+	FOREIGN KEY (`teacherId`) REFERENCES teachers(`teacherId`),
+	FOREIGN KEY (`subjectId`) REFERENCES subjects(`subjectId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

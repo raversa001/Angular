@@ -50,7 +50,7 @@
 
 		<div *ngIf="submitted">
 			<h4>Succès!</h4>
-			<button class="btn btn-success" (click)="saveAssignment()">Retour</button>
+			<button class="btn btn-success" [routerLink]="['/assignments']">Retour</button>
 		</div>
 	</div>
 </div>
