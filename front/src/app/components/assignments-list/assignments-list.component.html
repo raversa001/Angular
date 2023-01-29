@@ -35,7 +35,10 @@
 		<br>
 		<br>
 		{{ assignment.description }}
-		<button class="m-3 btn btn-sm btn-danger" style="float: right" (click)="removeAssignment(assignment)">Supprimer</button>
+		<div style="float: right">
+			<button class="m-3 btn btn-sm btn-warning" (click)="editAssignment(assignment)">Éditer</button>
+			<button class="m-3 btn btn-sm btn-danger" style="float: right" (click)="removeAssignment(assignment)">Supprimer</button>			
+		</div>
 	</li>
 </ul>
 

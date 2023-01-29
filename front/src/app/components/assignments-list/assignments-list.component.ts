@@ -60,6 +60,10 @@ export class AssignmentsListComponent implements OnInit {
 		})
 	}
 
+	editAssignment(ass: any): void {
+		console.log(ass)
+	}
+
 	searchTitle(): void {
 		this.currentAssignment = {};
 		this.currentIndex = -1
