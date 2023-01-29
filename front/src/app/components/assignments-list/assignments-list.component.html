@@ -22,7 +22,7 @@
 	<ul class="list-group">
 		<li
 		class="list-group-item"
-		*ngFor="let assignment of assignments; let i = index"
+		*ngFor="let assignment of pAssignments; let i = index"
 		[class.active]="i == currentIndex"
 		(click)="setActiveAssignment(assignment, i)"
 		>
@@ -42,16 +42,23 @@
 			<button class="btn btn-sm btn-danger" (click)="removeAssignment(assignment)">Supprimer</button>			
 		</div>
 	</li>
+	<div style="margin-top: 4em; margin-bottom: 2em; margin-left: auto; margin-right: auto; text-align: center">
+		<a>Page actuelle : {{ currentPage + 1}} / {{ maxPage }}</a>
+		<br>
+		<br>
+		<button style="width: 7em" class="btn btn-sm btn-success" (click)="previousPage()">Précédent</button>
+		<button style="width: 7em" class="btn btn-sm btn-success" (click)="nextPage()">Suivant</button>
+	</div>
 </ul>
 
 <!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
 	(DEBUG) Tout supprimer
 </button> -->
 </div>
-<!-- <div class="col-md-6">
+<div class="col-md-6">
 	<app-assignment-details
 	[viewMode]="true"
 	[currentAssignment]="currentAssignment"
 	></app-assignment-details>
-</div> -->
+</div>
 </div>

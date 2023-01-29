@@ -44,11 +44,12 @@ Assignment.findById = (id, result) => {
 Assignment.getAll = (filter, result) => {
 	let query = `SELECT assignmentId, assignments.subjectId, subjectName, description, from_unixtime(givenTime, '%d-%m-%y') as givenTime, teacherLN, from_unixtime(assignedTime, '%d-%m-%y') as assignedTime 
 	FROM assignments, subjects, teachers
-	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId
-	ORDER BY assignmentId`
+	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
 
 	if(filter)
 		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
+
+	query += " ORDER BY assignmentId;"
 
 	sql.query(query, (err, res) => {
 		if (err) {
@@ -115,7 +116,7 @@ Assignment.updateById = (id, assignment, result) => {
 };
 
 Assignment.remove = (id, result) => {
-	sql.query("DELETE FROM assignments WHERE subjectId = ?", id, (err, res) => {
+	sql.query("DELETE FROM assignments WHERE assignmentId = ?", id, (err, res) => {
 		if (err) {
 			console.log("error: ", err);
 			result(null, err);

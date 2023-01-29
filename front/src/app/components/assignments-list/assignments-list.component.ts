@@ -9,9 +9,12 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 })
 export class AssignmentsListComponent implements OnInit {
 	assignments?: Assignment[]
+	pAssignments?: Assignment[]
 	currentAssignment: Assignment = {}
 	currentIndex = -1;
 	title = ''
+	currentPage = 0;
+	maxPage = 0;
 
 	constructor(private assignmentService: AssignmentService) { }
 
@@ -19,12 +22,37 @@ export class AssignmentsListComponent implements OnInit {
 		this.retrieveAssignments();
 	}
 
+	round5(x: number): number {
+    	return Math.ceil(x/5)*5;
+	}
+
+	nextPage(): void {
+		if(this.assignments === undefined || this.currentPage + 1 >= this.round5(this.assignments.length) / 5)
+			return
+
+		this.currentPage += 1
+		let rg = (this.currentPage * 5)
+		
+		this.pAssignments = this.assignments.slice(rg, rg + 5)
+	}
+
+	previousPage(): void {
+		if(this.assignments === undefined || this.currentPage < 1)
+			return
+
+		this.currentPage -= 1
+		let rg = (this.currentPage * 5)
+		
+		this.pAssignments = this.assignments.slice(rg, rg + 5)
+	}
+
 	retrieveAssignments(): void {
 		this.assignmentService.getAll()
 		.subscribe({
 			next: (data) => {
-				console.log(data)
 				this.assignments = data
+				this.pAssignments = data.slice(0, 5)
+				this.maxPage = this.round5(data.length) / 5
 			},
 			error: (e) => console.error(e)
 		});
@@ -52,7 +80,7 @@ export class AssignmentsListComponent implements OnInit {
 	}
 
 	removeAssignment(ass: any): void {
-		this.assignmentService.delete(ass.subjectId)
+		this.assignmentService.delete(ass.assignmentId)
 		.subscribe({
 			next: (res) => {
 				this.refreshList()
@@ -66,14 +94,15 @@ export class AssignmentsListComponent implements OnInit {
 	}
 
 	searchTitle(): void {
-		this.currentAssignment = {};
+		this.currentAssignment = {}
 		this.currentIndex = -1
 
 		this.assignmentService.findByTitle(this.title)
 		.subscribe({
 			next: (data) => {
-				this.assignments = data;
-				console.log(data)
+				this.assignments = data
+				this.pAssignments = data.slice(0, 5)
+				this.maxPage = this.round5(data.length) / 5
 			},
 			error: (e) => console.error(e)
 		});
