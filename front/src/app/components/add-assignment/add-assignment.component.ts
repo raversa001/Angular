@@ -48,10 +48,13 @@ export class AddAssignmentComponent {
 	}
 
 	saveAssignment(): void {
+		let gt = this.assignment.givenTime || "1970-01-01"
+
 		const data = {
 			classId: this.assignment.classId,
 			subjectId: this.assignment.subjectId,
-			givenTime: this.assignment.givenTime,
+			//givenTime: this.assignment.givenTime,
+			givenTime: Math.round(new Date(gt).getTime() / 1000),
 			assignedTime: Math.round(Date.now() / 1000),
 			description: this.assignment.description
 		};

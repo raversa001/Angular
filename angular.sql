@@ -153,14 +153,15 @@ CREATE TABLE IF NOT EXISTS `teachers` (
 	`teacherFN` varchar(64) NOT NULL,
 	`teacherLN` varchar(64) NOT NULL,
 	PRIMARY KEY (`teacherId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `teachers`
 --
 
 INSERT INTO `teachers` (`teacherId`, `teacherFN`, `teacherLN`) VALUES
-(1, 'Michel', 'Buffa');
+(1, 'Michel', 'Buffa'),
+(2, 'Michel', 'Winter');
 
 -- --------------------------------------------------------
 

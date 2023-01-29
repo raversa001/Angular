@@ -42,9 +42,10 @@ Assignment.findById = (id, result) => {
 };
 
 Assignment.getAll = (filter, result) => {
-	let query = `SELECT assignments.subjectId, subjectName, description, givenTime, teacherLN, from_unixtime(assignedTime, '%Y %D %M') as assignedTime 
+	let query = `SELECT assignmentId, assignments.subjectId, subjectName, description, from_unixtime(givenTime, '%d-%m-%y') as givenTime, teacherLN, from_unixtime(assignedTime, '%d-%m-%y') as assignedTime 
 	FROM assignments, subjects, teachers
-	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
+	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId
+	ORDER BY assignmentId`
 
 	if(filter)
 		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	

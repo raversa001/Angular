@@ -23,6 +23,7 @@ export class AssignmentsListComponent implements OnInit {
 		this.assignmentService.getAll()
 		.subscribe({
 			next: (data) => {
+				console.log(data)
 				this.assignments = data
 			},
 			error: (e) => console.error(e)

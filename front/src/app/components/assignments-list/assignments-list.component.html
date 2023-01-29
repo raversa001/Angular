@@ -26,18 +26,20 @@
 		[class.active]="i == currentIndex"
 		(click)="setActiveAssignment(assignment, i)"
 		>
-		Devoir n°{{ assignment.subjectId }} de {{ assignment.subjectName }}
-		<br>
-		<br>
-		Donné le {{ assignment.assignedTime }} et à rendre pour le {{ assignment.givenTime }}
+		Devoir n°{{ assignment.assignmentId }} de {{ assignment.subjectName }}
 		<br>
 		Par le professeur {{ assignment.teacherLN }}
 		<br>
 		<br>
+		Donné le {{ assignment.assignedTime }}
+		<br>
+		À rendre pour le {{ assignment.givenTime }}
+		<br>
+		<br>
 		{{ assignment.description }}
 		<div style="float: right">
-			<button class="m-3 btn btn-sm btn-warning" (click)="editAssignment(assignment)">Éditer</button>
-			<button class="m-3 btn btn-sm btn-danger" style="float: right" (click)="removeAssignment(assignment)">Supprimer</button>			
+			<button class="btn btn-sm btn-warning" (click)="editAssignment(assignment)">Éditer</button>
+			<button class="btn btn-sm btn-danger" (click)="removeAssignment(assignment)">Supprimer</button>			
 		</div>
 	</li>
 </ul>
@@ -46,10 +48,10 @@
 	(DEBUG) Tout supprimer
 </button> -->
 </div>
-<div class="col-md-6">
+<!-- <div class="col-md-6">
 	<app-assignment-details
 	[viewMode]="true"
 	[currentAssignment]="currentAssignment"
 	></app-assignment-details>
-</div>
+</div> -->
 </div>
