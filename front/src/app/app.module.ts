@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { AddAssignmentComponent } from './components/add-assignment/add-assignment.component';
 import { AssignmentDetailsComponent } from './components/assignment-details/assignment-details.component';
 import { AssignmentsListComponent } from './components/assignments-list/assignments-list.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddAssignmentComponent,
     AssignmentDetailsComponent,
-    AssignmentsListComponent
+    AssignmentsListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
