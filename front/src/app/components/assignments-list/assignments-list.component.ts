@@ -12,9 +12,9 @@ export class AssignmentsListComponent implements OnInit {
 	pAssignments?: Assignment[]
 	currentAssignment: Assignment = {}
 	currentIndex = -1;
-	title = ''
+	filter = ''
 	currentPage = 0;
-	maxPage = 0;
+	maxPage = 1;
 
 	constructor(private assignmentService: AssignmentService) { }
 
@@ -27,8 +27,11 @@ export class AssignmentsListComponent implements OnInit {
 	}
 
 	nextPage(): void {
-		if(this.assignments === undefined || this.currentPage + 1 >= this.round5(this.assignments.length) / 5)
+		if(this.assignments === undefined)
 			return
+
+		if(this.currentPage + 1 >= this.round5(this.assignments.length) / 5)
+			this.currentPage = -1
 
 		this.currentPage += 1
 		let rg = (this.currentPage * 5)
@@ -37,8 +40,11 @@ export class AssignmentsListComponent implements OnInit {
 	}
 
 	previousPage(): void {
-		if(this.assignments === undefined || this.currentPage < 1)
+		if(this.assignments === undefined)
 			return
+
+		if(this.currentPage < 1)
+			this.currentPage = this.maxPage
 
 		this.currentPage -= 1
 		let rg = (this.currentPage * 5)
@@ -93,16 +99,17 @@ export class AssignmentsListComponent implements OnInit {
 		console.log(ass)
 	}
 
-	searchTitle(): void {
+	filterAssignment(): void {
 		this.currentAssignment = {}
 		this.currentIndex = -1
 
-		this.assignmentService.findByTitle(this.title)
+		this.assignmentService.filterAssignment(this.filter)
 		.subscribe({
 			next: (data) => {
 				this.assignments = data
 				this.pAssignments = data.slice(0, 5)
 				this.maxPage = this.round5(data.length) / 5
+				this.currentPage = 0
 			},
 			error: (e) => console.error(e)
 		});

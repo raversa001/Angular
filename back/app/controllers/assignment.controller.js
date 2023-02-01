@@ -3,7 +3,7 @@ const Assignment = require("../models/assignment.model.js");
 exports.create = (req, res) => {
 	if (!req.body) {
 		res.status(400).send({
-			message: "Content can not be empty!"
+			message: "empty content!"
 		});
 	}
 
@@ -19,20 +19,20 @@ exports.create = (req, res) => {
 		if (err)
 			res.status(500).send({
 				message:
-					err.message || "Some error occurred while creating the Assignment."
+					err.message || "create failed!"
 			});
 		else res.send(data);
 	});
 };
 
 exports.findAll = (req, res) => {
-	const title = req.query.title;
+	const filter = req.query.filter;
 
-	Assignment.getAll(title, (err, data) => {
+	Assignment.getAll(filter, (err, data) => {
 		if (err)
 			res.status(500).send({
 				message:
-					err.message || "Some error occurred while retrieving assignments."
+					err.message || "findAll failed!"
 			});
 		else res.send(data);
 	});
@@ -45,7 +45,7 @@ exports.findAllSubjects = (req, res) => {
 		if (err)
 			res.status(500).send({
 				message:
-					err.message || "Some error occurred while retrieving assignments."
+					err.message || "findAllSubjects failed!"
 			});
 		else res.send(data);
 	});
@@ -58,23 +58,22 @@ exports.findAllClasses = (req, res) => {
 		if (err)
 			res.status(500).send({
 				message:
-					err.message || "Some error occurred while retrieving assignments."
+					err.message || "findAllClasses failed!"
 			});
 		else res.send(data);
 	});
 };
 
-// Find a single Assignment by Id
 exports.findOne = (req, res) => {
 	Assignment.findById(req.params.id, (err, data) => {
 		if (err) {
 			if (err.kind === "not_found") {
 				res.status(404).send({
-					message: `Not found Assignment with id ${req.params.id}.`
+					message: `id ${req.params.id} not found!`
 				});
 			} else {
 				res.status(500).send({
-					message: "Error retrieving Assignment with id " + req.params.id
+					message: "retrieving id " + req.params.id + " failed!"
 				});
 			}
 		} else res.send(data);
@@ -84,7 +83,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
 	if (!req.body) {
 		res.status(400).send({
-			message: "Content can not be empty!"
+			message: "empty content!"
 		});
 	}
 
@@ -97,11 +96,11 @@ exports.update = (req, res) => {
 			if (err) {
 				if (err.kind === "not_found") {
 					res.status(404).send({
-						message: `Not found Assignment with id ${req.params.id}.`
+						message: `id ${req.params.id} not found! (update)`
 					});
 				} else {
 					res.status(500).send({
-						message: "Error updating Assignment with id " + req.params.id
+						message: "update failed for id " + req.params.id + "!"
 					});
 				}
 			} else res.send(data);
@@ -114,14 +113,14 @@ exports.delete = (req, res) => {
 		if (err) {
 			if (err.kind === "not_found") {
 				res.status(404).send({
-					message: `Not found Assignment with id ${req.params.id}.`
+					message: `id ${req.params.id} not found! (delete)`
 				});
 			} else {
 				res.status(500).send({
-					message: "Could not delete Assignment with id " + req.params.id
+					message: "delete failed for id " + req.params.id + "!"
 				});
 			}
-		} else res.send({ message: `Assignment was deleted successfully!` });
+		} else res.send({ message: `Suppression réussie!` });
 	});
 };
 
@@ -130,8 +129,8 @@ exports.deleteAll = (req, res) => {
 		if (err)
 			res.status(500).send({
 				message:
-					err.message || "Some error occurred while removing all assignments."
+					err.message || "deleteAll failed!"
 			});
-		else res.send({ message: `All Assignments were deleted successfully!` });
+		else res.send({ message: `Suppression totale réussie!` });
 	});
 };

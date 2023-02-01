@@ -5,12 +5,12 @@
 			type="text"
 			class="form-control"
 			placeholder="Recherche par matière ou professeur"
-			[(ngModel)]="title"
+			[(ngModel)]="filter"
 			/>
 			<div class="input-group-append">
 				<button
 				class="btn btn-outline-secondary"
-				(click)="searchTitle()"
+				(click)="filterAssignment()"
 				>
 				Rechercher
 			</button>

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Assignment } from '../models/assignment.model'
 
-const baseUrl = 'http://145.239.196.97:8080/api/assignments'
+const baseUrl = 'http://localhost:8080/api/assignments'
 
 @Injectable({
 	providedIn: 'root'
@@ -36,8 +36,8 @@ export class AssignmentService {
 		return this.http.delete(baseUrl)
 	}
 
-	findByTitle(title: any): Observable<Assignment[]> {
-		return this.http.get<Assignment[]>(`${baseUrl}?title=${title}`)
+	filterAssignment(filter: any): Observable<Assignment[]> {
+		return this.http.get<Assignment[]>(`${baseUrl}?filter=${filter}`)
 	}
 
 	getAllClasses(): Observable<Assignment[]> {		
