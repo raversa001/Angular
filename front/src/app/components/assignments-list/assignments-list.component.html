@@ -4,7 +4,7 @@
 			<input
 			type="text"
 			class="form-control"
-			placeholder="Recherche par matière ou professeur"
+			placeholder="Recherche par matière, professeur, classe"
 			[(ngModel)]="filter"
 			/>
 			<div class="input-group-append">
@@ -30,6 +30,8 @@
 		<br>
 		Par le professeur {{ assignment.teacherLN }}
 		<br>
+		Pour la classe {{ assignment.className }}
+		<br>
 		<br>
 		Donné le {{ assignment.assignedTime }}
 		<br>
@@ -38,7 +40,7 @@
 		<br>
 		{{ assignment.description }}
 		<div style="float: right">
-			<button class="btn btn-sm btn-warning" (click)="editAssignment(assignment)">Éditer</button>
+			<a routerLink="/edit/{{ assignment.assignmentId }}"><button class="btn btn-sm btn-warning">Éditer</button></a>
 			<button class="btn btn-sm btn-danger" (click)="removeAssignment(assignment)">Supprimer</button>			
 		</div>
 	</li>
@@ -54,11 +56,5 @@
 <!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllAssignments()">
 	(DEBUG) Tout supprimer
 </button> -->
-</div>
-<div class="col-md-6">
-	<app-assignment-details
-	[viewMode]="true"
-	[currentAssignment]="currentAssignment"
-	></app-assignment-details>
 </div>
 </div>

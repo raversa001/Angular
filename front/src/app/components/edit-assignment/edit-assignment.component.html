@@ -1,0 +1,56 @@
+<div>
+	<div class="submit-form">
+		<div *ngIf="!submitted">
+			<div class="form-group">
+				<label for="classId">Classe concernée</label>
+					<select #sel [ngModelOptions]="{standalone: true}" [(ngModel)]="assignment.classId" class="form-control" required (change)="onChange(sel.value)">
+						<option *ngFor="let class of assignments"
+						[value]="class.classId">
+						{{ class.className }}
+					</option>						
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="subjectId">Matière concernée</label>
+					<select #sel [ngModelOptions]="{standalone: true}" [(ngModel)]="assignment.subjectId" class="form-control" required (change)="onChange(sel.value)">
+						<option *ngFor="let class of subjects"
+						[value]="class.subjectId">
+						{{ class.subjectName }}
+					</option>						
+				</select>
+			</div>
+
+			<div class="form-group">
+				<abbr title="Je peux récupérer la valeur UNIX depuis la BDD, ce que je fais d'ailleurs. Mais aucune idée comment définir la valeur de l'input date après coup pour que ça match! Comment accéder au DOM de l'input date depuis le typescript pour définir la .value ?" for="givenTime">Date butoire</abbr>
+				<input
+				type="text"
+				class="form-control"
+				id="givenTime"
+				required
+				[(ngModel)]="assignment.givenTime"
+				name="givenTime"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="description">Description</label>
+				<textarea
+				type="text"
+				class="form-control"
+				id="description"
+				required
+				[(ngModel)]="assignment.description"
+				name="description"
+				></textarea>
+			</div>
+
+			<button (click)="saveAssignment()" class="btn btn-success">OK</button>
+		</div>
+
+		<div *ngIf="submitted">
+			<h4>Mis à jour avec succès!</h4>
+			<button class="btn btn-success" [routerLink]="['/assignments']">Retour</button>
+		</div>
+	</div>
+</div>

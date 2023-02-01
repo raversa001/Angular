@@ -1,23 +1,28 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 import { Assignment } from 'src/app/models/assignment.model'
 import { AssignmentService } from 'src/app/services/assignment.service'
 
 @Component({
-	selector: 'app-add-assignment',
-	templateUrl: './add-assignment.component.html',
-	styleUrls: ['./add-assignment.component.css']
+	selector: 'app-edit-assignment',
+	templateUrl: './edit-assignment.component.html',
+	styleUrls: ['./edit-assignment.component.css']
 })
-export class AddAssignmentComponent {
+export class EditAssignmentComponent {
 	assignments?: Assignment[]
 	subjects?: Assignment[]
+	assId?: any
 	assignment: Assignment = {}
 	submitted = false
+	givenTimeDate?: any
 
-	constructor(private assignmentService: AssignmentService) { }
+	constructor(private assignmentService: AssignmentService) {}
 
 	ngOnInit(): void {
 		this.retrieveClasses()
 		this.retrieveSubjects()
+		this.assId = window.location.href.split("/")[4]
+		this.retrieveAssignment(this.assId)
+		// add check to see which teacher is on
 	}
 
 	retrieveClasses(): void {
@@ -40,25 +45,39 @@ export class AddAssignmentComponent {
 		})
 	}
 
-	saveAssignment(): void {
-		let gt = this.assignment.givenTime || "1970-01-01"
+	retrieveAssignment(id: any): void {
+		this.assignmentService.get(id)
+		.subscribe({
+			next: (data) => {
+				this.assignment = data
+				this.assignment.givenTimeDate = new Date(data.givenTime! * 1000)
+			},
+			error: (e) => {
+				console.error(`L'assigment avec l'ID ${id} n'existe pas!`)
+				console.error(e)
+				window.location.href = "/"
+			}
+		})
+	}
 
+	saveAssignment(): void {
 		const data = {
 			classId: this.assignment.classId,
 			subjectId: this.assignment.subjectId,
-			//givenTime: this.assignment.givenTime,
-			givenTime: Math.round(new Date(gt).getTime() / 1000),
-			assignedTime: Math.round(Date.now() / 1000),
+			givenTime: this.assignment.givenTime,
 			description: this.assignment.description
 		};
 
-		this.assignmentService.create(data)
+		this.assignmentService.update(this.assId, data)
 		.subscribe({
 			next: (res) => {
 				console.log(res)
 				this.submitted = true
 			},
-			error: (e) => console.error(e)
+			error: (e) => {
+				console.error(e)
+				window.location.href = "/"
+			}
 		})
 	}
 
@@ -74,5 +93,4 @@ export class AddAssignmentComponent {
 			published: false
 		}
 	}
-
 }

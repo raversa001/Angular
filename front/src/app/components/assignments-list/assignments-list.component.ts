@@ -68,6 +68,7 @@ export class AssignmentsListComponent implements OnInit {
 		this.retrieveAssignments();
 		this.currentAssignment = {}
 		this.currentIndex = -1
+		this.currentPage = 0
 	}
 
 	setActiveAssignment(assignment: Assignment, index: number): void {

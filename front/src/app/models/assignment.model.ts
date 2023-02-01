@@ -13,4 +13,5 @@ export class Assignment {
 	assignedTime?: number
 	classId?: number
 	className?: string	
+	givenTimeDate?: Date
 }

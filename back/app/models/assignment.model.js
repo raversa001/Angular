@@ -11,7 +11,7 @@ const Assignment = function(assignment) {
 
 Assignment.create = (newAssignment, result) => {
 	sql.query("INSERT INTO assignments SET ?", newAssignment, (err, res) => {
-		if (err) {
+		if(err) {
 			console.log("error: ", err);
 			result(err, null);
 			return;
@@ -23,36 +23,44 @@ Assignment.create = (newAssignment, result) => {
 };
 
 Assignment.findById = (id, result) => {
-	sql.query(`SELECT * FROM assignments WHERE id = ${id}`, (err, res) => {
-		if (err) {
+	sql.query(`SELECT * FROM assignments WHERE assignmentId = ${id}`, (err, res) => {
+		if(err) {
 			console.log("error: ", err);
 			result(err, null);
 			return;
 		}
 
-		if (res.length) {
-			console.log("found assignment: ", res[0]);
+		if(res.length) {
 			result(null, res[0]);
 			return;
 		}
 
-	// not found Assignment with the id
 		result({ kind: "not_found" }, null);
 	});
 };
 
 Assignment.getAll = (filter, result) => {
-	let query = `SELECT assignmentId, assignments.subjectId, subjectName, description, from_unixtime(givenTime, '%d-%m-%y') as givenTime, teacherLN, from_unixtime(assignedTime, '%d-%m-%y') as assignedTime 
-	FROM assignments, subjects, teachers
-	WHERE subjects.subjectId = assignments.subjectId AND teacherId = giverId`
+	let query = `SELECT assignmentId, 
+	assignments.subjectId, 
+	subjectName, 
+	description, 
+	from_unixtime(givenTime, '%d-%m-%y') as givenTime, 
+	teacherLN, 
+	from_unixtime(assignedTime, '%d-%m-%y') as assignedTime,
+	assignments.classId,
+	classes.className 
+	FROM assignments, subjects, teachers, classes
+	WHERE subjects.subjectId = assignments.subjectId 
+	AND teacherId = giverId
+	AND classes.classId = assignments.classId`
 
 	if(filter)
-		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
+		query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%' OR classname LIKE '%${filter}%')`	
 
 	query += " ORDER BY assignmentId;"
 
 	sql.query(query, (err, res) => {
-		if (err) {
+		if(err) {
 			result(null, err);
 			return;
 		}
@@ -68,7 +76,7 @@ Assignment.getAllSubjects = (teacherId, result) => {
 	//	query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
 
 	sql.query(query, (err, res) => {
-		if (err) {
+		if(err) {
 			result(null, err);
 			return;
 		}
@@ -84,7 +92,7 @@ Assignment.getAllClasses = (teacherId, result) => {
 	//	query += ` AND (subjectName LIKE '%${filter}%' OR teacherLN LIKE '%${filter}%')`	
 
 	sql.query(query, (err, res) => {
-		if (err) {
+		if(err) {
 			result(null, err);
 			return;
 		}
@@ -95,16 +103,16 @@ Assignment.getAllClasses = (teacherId, result) => {
 
 Assignment.updateById = (id, assignment, result) => {
 	sql.query(
-		"UPDATE assignments SET description = ? WHERE subjectId = ?",
-		[assignment.description, id],
+		"UPDATE assignments SET classId = ?, subjectId = ?, givenTime = ?, description = ? WHERE assignmentId = ?",
+		[assignment.classId, assignment.subjectId, assignment.givenTime, assignment.description, id],
 		(err, res) => {
-			if (err) {
+			if(err) {
 				console.log("error: ", err);
 				result(null, err);
 				return;
 			}
 
-			if (res.affectedRows == 0) {
+			if(res.affectedRows == 0) {
 				result({ kind: "not_found" }, null);
 				return;
 			}
@@ -117,13 +125,13 @@ Assignment.updateById = (id, assignment, result) => {
 
 Assignment.remove = (id, result) => {
 	sql.query("DELETE FROM assignments WHERE assignmentId = ?", id, (err, res) => {
-		if (err) {
+		if(err) {
 			console.log("error: ", err);
 			result(null, err);
 			return;
 		}
 
-		if (res.affectedRows == 0) {
+		if(res.affectedRows == 0) {
 	  // not found Assignment with the id
 			result({ kind: "not_found" }, null);
 			return;
@@ -136,7 +144,7 @@ Assignment.remove = (id, result) => {
 
 Assignment.removeAll = result => {
 	sql.query("DELETE FROM assignments", (err, res) => {
-		if (err) {
+		if(err) {
 			console.log("error: ", err);
 			result(null, err);
 			return;
