@@ -41,7 +41,7 @@ export class AddAssignmentComponent {
 	}
 
 	saveAssignment(): void {
-		let gt = this.assignment.givenTime || "1970-01-01"
+		let gt = this.assignment.givenTime!
 
 		const data = {
 			classId: this.assignment.classId,
@@ -63,7 +63,7 @@ export class AddAssignmentComponent {
 	}
 
 	onChange(value:any): void {
-		console.log(value)
+		//console.log(value)
 	}
 
 	newAssignment(): void {

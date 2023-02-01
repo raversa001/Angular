@@ -9,6 +9,7 @@ import { AddAssignmentComponent } from './components/add-assignment/add-assignme
 import { AssignmentsListComponent } from './components/assignments-list/assignments-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { EditAssignmentComponent } from './components/edit-assignment/edit-assignment.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
 	declarations: [
@@ -16,7 +17,8 @@ import { EditAssignmentComponent } from './components/edit-assignment/edit-assig
 		AddAssignmentComponent,
 		AssignmentsListComponent,
 		LoginComponent,
-		EditAssignmentComponent
+		EditAssignmentComponent,
+  WelcomeComponent
 	],
 	imports: [
 		BrowserModule,

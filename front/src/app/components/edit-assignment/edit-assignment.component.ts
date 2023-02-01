@@ -76,7 +76,7 @@ export class EditAssignmentComponent {
 			},
 			error: (e) => {
 				console.error(e)
-				window.location.href = "/"
+				window.location.href = "/assignments"
 			}
 		})
 	}
