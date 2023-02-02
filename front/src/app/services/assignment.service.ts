@@ -9,7 +9,6 @@ const baseUrl = 'http://localhost:8080/api/assignments'
 	providedIn: 'root'
 })
 export class AssignmentService {
-
 	constructor(private http: HttpClient) { }
 
 	getAll(): Observable<Assignment[]> {

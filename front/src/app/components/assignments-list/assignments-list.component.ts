@@ -54,6 +54,10 @@ export class AssignmentsListComponent implements OnInit {
 	}
 
 	retrieveAssignments(): void {
+		delete this.assignments
+		delete this.pAssignments
+		this.doneLoading = false
+
 		this.assignmentService.getAll()
 		.subscribe({
 			next: (data) => {
@@ -98,13 +102,12 @@ export class AssignmentsListComponent implements OnInit {
 		})
 	}
 
-	editAssignment(ass: any): void {
-		console.log(ass)
-	}
-
 	filterAssignment(): void {
+		delete this.assignments
+		delete this.pAssignments
 		this.currentAssignment = {}
 		this.currentIndex = -1
+		this.doneLoading = false
 
 		this.assignmentService.filterAssignment(this.filter)
 		.subscribe({
@@ -113,6 +116,7 @@ export class AssignmentsListComponent implements OnInit {
 				this.pAssignments = data.slice(0, 5)
 				this.maxPage = this.round5(data.length) / 5
 				this.currentPage = 0
+				this.doneLoading = true
 			},
 			error: (e) => console.error(e)
 		});
