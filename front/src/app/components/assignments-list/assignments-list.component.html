@@ -20,6 +20,8 @@
 <div class="col-md-6">
 	<h4>Liste des devoirs</h4>
 	<ul class="list-group">
+		<img *ngIf="!doneLoading" src="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif"/>
+
 		<li
 		class="list-group-item"
 		*ngFor="let assignment of pAssignments; let i = index"

@@ -11,10 +11,11 @@ export class AssignmentsListComponent implements OnInit {
 	assignments?: Assignment[]
 	pAssignments?: Assignment[]
 	currentAssignment: Assignment = {}
-	currentIndex = -1;
+	currentIndex = -1
 	filter = ''
-	currentPage = 0;
-	maxPage = 1;
+	currentPage = 0
+	maxPage = 1
+	doneLoading = false
 
 	constructor(private assignmentService: AssignmentService) { }
 
@@ -59,6 +60,7 @@ export class AssignmentsListComponent implements OnInit {
 				this.assignments = data
 				this.pAssignments = data.slice(0, 5)
 				this.maxPage = this.round5(data.length) / 5
+				this.doneLoading = true
 			},
 			error: (e) => console.error(e)
 		});
